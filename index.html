@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .data-box { border: 1px solid #ccc; padding: 20px; margin: 20px auto; width: 200px; }
+        .data-title { font-size: 1.2em; font-weight: bold; }
+        .data-value { font-size: 1.5em; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Sensor Data</h1>
+
+    <div class="data-box">
+        <div class="data-title">Rainfall (mm)</div>
+        <div id="rainfall" class="data-value">-</div>
+    </div>
+
+    <div class="data-box">
+        <div class="data-title">Soil Moisture (%)</div>
+        <div id="soilMoisture" class="data-value">-</div>
+    </div>
+
+    <script>
+        function fetchData() {
+            fetch('sensordata.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('rainfall').textContent = data.rainfall;
+                    document.getElementById('soilMoisture').textContent = data.soilMoisture;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        setInterval(fetchData, 5000); // Refresh data setiap 5 detik
+        fetchData(); // Fetch data pertama kali
+    </script>
+</body>
+</html>
